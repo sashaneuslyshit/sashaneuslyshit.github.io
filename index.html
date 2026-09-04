@@ -127,7 +127,7 @@
 
         <div class="widget">
           <a class="kicker" href="https://music.yandex.ru/album/43688399" target="_blank" rel="noopener">Плеер Яндекс Музыки · открыть</a>
-          <div id="yandex-widget"><a class="widget-tap" href="https://music.yandex.ru/album/43688399" target="_blank" rel="noopener" aria-label="Открыть в Яндекс Музыке"></a><iframe src="https://music.yandex.ru/iframe/album/43688399" loading="lazy" title="Яндекс Музыка: Холод под утро"></iframe></div>
+          <div id="yandex-widget"><a class="widget-tap" href="https://music.yandex.ru/album/43688399" target="_blank" rel="noopener" aria-label="Открыть в Яндекс Музыке"></a><iframe id="ym" src="https://music.yandex.ru/iframe/album/43688399" allow="autoplay; encrypted-media" title="Яндекс Музыка: Холод под утро"></iframe></div>
         </div>
 
         <div class="about">
@@ -187,10 +187,17 @@
     if (r.ok) { hasPreview = true; buttons[0].hidden = false; player.hidden = false; }
   }).catch(function () {});
 
+  var ym = document.getElementById('ym');
+  var ymStarted = false;
+  function startYandex() {
+    if (ymStarted) return;
+    ymStarted = true;
+    ym.src = 'https://music.yandex.ru/iframe/album/43688399?autoplay=1';
+  }
   document.addEventListener('click', function (e) {
-    if (!hasPreview) return;
     if (e.target.closest('a, button, #yandex-widget, .player, iframe')) return;
-    toggle();
+    if (hasPreview) { toggle(); return; }
+    startYandex();
   });
 })();
 </script>
