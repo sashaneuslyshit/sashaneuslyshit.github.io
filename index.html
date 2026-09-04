@@ -189,7 +189,7 @@
 
   var ym = document.getElementById('ym');
   var ymState = 'idle';
-  function ymSend(type) { try { ym.contentWindow.postMessage({ type: type }, 'https://music.yandex.ru'); } catch (e) {} }
+  function ymSend(type) { try { ym.contentWindow.postMessage({ source: 'EXTERNAL_PLAYER', type: type }, 'https://music.yandex.ru'); } catch (e) {} }
   function startYandex() {
     if (ymState === 'idle') { ymSend('PLAY_SOURCE'); ymState = 'playing'; }
     else if (ymState === 'playing') { ymSend('PAUSE'); ymState = 'paused'; }
@@ -198,8 +198,9 @@
   window.addEventListener('message', function (e) {
     if (e.origin !== 'https://music.yandex.ru' || !e.data) return;
     var st = e.data.status || (e.data.payload && e.data.payload.status);
-    if (st === 'PLAYING') ymState = 'playing';
-    else if (st === 'PAUSED') ymState = 'paused';
+    if (st === 'PLAYING' || st === 'LOADING') ymState = 'playing';
+    else if (st === 'PAUSED' || st === 'STOPPED' || st === 'ENDED') ymState = 'paused';
+    else if (st === 'IDLE' || e.data.type === 'ERROR') ymState = 'idle';
   });
   var downX = 0, downY = 0;
   document.addEventListener('pointerdown', function (e) { downX = e.clientX; downY = e.clientY; }, { passive: true });
