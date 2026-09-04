@@ -127,7 +127,7 @@
 
         <div class="widget">
           <a class="kicker" href="https://music.yandex.ru/album/43688399" target="_blank" rel="noopener">Плеер Яндекс Музыки · открыть</a>
-          <div id="yandex-widget"><a class="widget-tap" href="https://music.yandex.ru/album/43688399" target="_blank" rel="noopener" aria-label="Открыть в Яндекс Музыке"></a><iframe id="ym" src="https://music.yandex.ru/iframe/album/43688399" allow="autoplay; encrypted-media" title="Яндекс Музыка: Холод под утро"></iframe></div>
+          <div id="yandex-widget"><a class="widget-tap" href="https://music.yandex.ru/album/43688399" target="_blank" rel="noopener" aria-label="Открыть в Яндекс Музыке"></a><iframe id="ym" src="https://music.yandex.ru/iframe/album/43688399?display=bandlink-wiki&parentOrigin=https%3A%2F%2Fsashaneuslyshit.github.io" allow="autoplay; encrypted-media" title="Яндекс Музыка: Холод под утро"></iframe></div>
         </div>
 
         <div class="about">
@@ -188,12 +188,19 @@
   }).catch(function () {});
 
   var ym = document.getElementById('ym');
-  var ymStarted = false;
+  var ymState = 'idle';
+  function ymSend(type) { try { ym.contentWindow.postMessage({ type: type }, 'https://music.yandex.ru'); } catch (e) {} }
   function startYandex() {
-    if (ymStarted) return;
-    ymStarted = true;
-    ym.src = 'https://music.yandex.ru/iframe/album/43688399?autoplay=1';
+    if (ymState === 'idle') { ymSend('PLAY_SOURCE'); ymState = 'playing'; }
+    else if (ymState === 'playing') { ymSend('PAUSE'); ymState = 'paused'; }
+    else { ymSend('RESUME'); ymState = 'playing'; }
   }
+  window.addEventListener('message', function (e) {
+    if (e.origin !== 'https://music.yandex.ru' || !e.data) return;
+    var st = e.data.status || (e.data.payload && e.data.payload.status);
+    if (st === 'PLAYING') ymState = 'playing';
+    else if (st === 'PAUSED') ymState = 'paused';
+  });
   document.addEventListener('click', function (e) {
     if (e.target.closest('a, button, #yandex-widget, .player, iframe')) return;
     if (hasPreview) { toggle(); return; }
