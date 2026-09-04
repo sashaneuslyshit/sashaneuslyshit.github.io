@@ -22,7 +22,7 @@
   @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 
-  .page { min-height: 100vh; background: radial-gradient(120% 80% at 50% 0%, #101c33 0%, #0a1120 45%, #070c16 100%); color: #E9EEF7; font-family: Manrope, system-ui, sans-serif; display: flex; justify-content: center; padding: 0 0 40px; }
+  .page { cursor: pointer; min-height: 100vh; background: radial-gradient(120% 80% at 50% 0%, #101c33 0%, #0a1120 45%, #070c16 100%); color: #E9EEF7; font-family: Manrope, system-ui, sans-serif; display: flex; justify-content: center; padding: 0 0 40px; }
   .col { width: 100%; max-width: 430px; padding: 0 20px; }
   .grid { display: grid; grid-template-columns: 1fr; align-items: start; column-gap: 56px; row-gap: 18px; padding-top: 28px; animation: rise .7s ease both; }
   .group { display: flex; flex-direction: column; gap: 18px; }
@@ -201,7 +201,10 @@
     if (st === 'PLAYING') ymState = 'playing';
     else if (st === 'PAUSED') ymState = 'paused';
   });
-  document.addEventListener('click', function (e) {
+  var downX = 0, downY = 0;
+  document.addEventListener('pointerdown', function (e) { downX = e.clientX; downY = e.clientY; }, { passive: true });
+  document.addEventListener('pointerup', function (e) {
+    if (Math.abs(e.clientX - downX) > 12 || Math.abs(e.clientY - downY) > 12) return;
     if (e.target.closest('a, button, #yandex-widget, .player, iframe')) return;
     if (hasPreview) { toggle(); return; }
     startYandex();
