@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Холод под утро — Саша не услышит</title>
+<meta name="description" content="Сингл «Холод под утро» проекта «Саша не услышит». Грустный электропоп. Слушать в Яндекс Музыке, VK Музыке, Звуке и МТС Музыке.">
+<meta property="og:title" content="Холод под утро — Саша не услышит">
+<meta property="og:description" content="Ночь после разговора, которого не было. Новый сингл.">
+<meta property="og:image" content="cover_3000.jpg">
+<meta property="og:type" content="music.song">
+<style>
+:root{--bg:#070b16;--card:#0f1628;--text:#e8ecf5;--muted:#8a93a8;--accent:#f2a742;--accent2:#ffcf7a}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:480px;margin:0 auto;padding:24px 20px 48px}
+.cover{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.cover img{display:block;width:100%;height:auto}
+.play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;border:0;background:rgba(242,167,66,.95);color:#1a1200;font-size:28px;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
+.play:active{transform:translate(-50%,-50%) scale(.96)}
+.play[hidden]{display:none}
+h1{font-size:28px;line-height:1.15;margin:22px 0 4px;font-weight:700;letter-spacing:-.01em}
+.artist{color:var(--muted);font-size:16px;margin:0 0 18px}
+.bar{height:4px;background:#1c2540;border-radius:2px;overflow:hidden;margin:0 0 6px}
+.bar i{display:block;height:100%;width:0;background:var(--accent)}
+.hint{font-size:12px;color:var(--muted);margin:0 0 20px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;border-radius:14px;text-decoration:none;font-weight:600;font-size:17px;margin:0 0 10px;border:1px solid transparent}
+.btn.main{background:var(--accent);color:#1a1200}
+.btn.main:active{background:var(--accent2)}
+.btn.tg{background:transparent;border-color:#26304d;color:var(--text)}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 22px}
+.row a{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:12px;background:var(--card);color:var(--text);text-decoration:none;font-size:14px;border:1px solid #1c2540}
+.note{font-size:12px;color:var(--muted);text-align:center;margin:-4px 0 14px}
+.widget{border-radius:14px;overflow:hidden;border:1px solid #1c2540;background:var(--card);margin:0 0 22px}
+.widget iframe{display:block;width:100%;height:180px;border:0}
+.about{font-size:16px;line-height:1.55;color:#c9d0e0;margin:0 0 10px}
+.facts{font-size:13px;color:var(--muted);margin:0 0 22px}
+footer{margin-top:34px;font-size:12px;color:var(--muted);line-height:1.8;text-align:center}
+footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cover">
+    <img src="cover.jpg" alt="Обложка сингла «Холод под утро»">
+    <button class="play" id="play" aria-label="Слушать отрывок" hidden>&#9654;</button>
+  </div>
+  <h1>Холод под утро</h1>
+  <p class="artist">Саша не услышит</p>
+  <div id="preview" hidden>
+    <div class="bar"><i id="prog"></i></div>
+    <p class="hint">Отрывок 30 секунд. Полностью в Яндекс Музыке.</p>
+    <audio id="audio" preload="none" src="preview.mp3"></audio>
+  </div>
+
+  <a class="btn main" href="https://music.yandex.ru/album/43688399">Слушать в Яндекс Музыке</a>
+  <p class="note">Если не открывается, отключите VPN</p>
+
+  <div class="row">
+    <a href="https://music.vk.com/link/xM3oq">VK Музыка</a>
+    <a href="https://zvuk.com/release/52638806">Звук</a>
+    <a href="https://music.mts.ru/album/43688399">МТС Музыка</a>
+  </div>
+
+  <div class="widget"><iframe src="https://music.yandex.ru/iframe/album/43688399" loading="lazy" allow="clipboard-write" title="Яндекс Музыка"></iframe></div>
+
+  <p class="about">Ночь после разговора, которого не было. Он написал ей всё, что не сказал. Она прочитала и не ответила.</p>
+  <p class="facts">Сингл · 27 августа 2026 · 2:22 · электропоп</p>
+
+  <a class="btn tg" href="https://t.me/sasha_ne_uslyshit">Канал в Telegram</a>
+
+  <footer>
+    Саша не услышит, 2026<br>
+    <a href="mailto:ac.7.7.7@yandex.ru">ac.7.7.7@yandex.ru</a> · <a href="privacy.html">Политика конфиденциальности</a>
+  </footer>
+</div>
+<script>
+(function(){
+  var a=document.getElementById('audio'),p=document.getElementById('play'),pr=document.getElementById('prog'),box=document.getElementById('preview');
+  fetch('preview.mp3',{method:'HEAD'}).then(function(r){ if(r.ok){p.hidden=false;box.hidden=false;} }).catch(function(){});
+  p.addEventListener('click',function(){ if(a.paused){a.play();p.innerHTML='&#10074;&#10074;';}else{a.pause();p.innerHTML='&#9654;';} });
+  a.addEventListener('timeupdate',function(){ if(a.duration){pr.style.width=(a.currentTime/a.duration*100)+'%';} });
+  a.addEventListener('ended',function(){ p.innerHTML='&#9654;'; pr.style.width='0'; });
+})();
+</script>
+</body>
+</html>
